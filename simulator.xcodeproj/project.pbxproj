@@ -23,8 +23,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E2273CD221D4EF28003331AB /* printer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = printer; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2273CD221D4EF28003331AB /* simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = simulator; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2273CD521D4EF28003331AB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E29ABD602210B52A006BA49F /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
+		E29ABD612210B59D006BA49F /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,33 +43,35 @@
 		E2273CC921D4EF28003331AB = {
 			isa = PBXGroup;
 			children = (
-				E2273CD421D4EF28003331AB /* printer */,
+				E2273CD421D4EF28003331AB /* simulator */,
 				E2273CD321D4EF28003331AB /* Products */,
+				E29ABD602210B52A006BA49F /* test.jpg */,
 			);
 			sourceTree = "<group>";
 		};
 		E2273CD321D4EF28003331AB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E2273CD221D4EF28003331AB /* printer */,
+				E2273CD221D4EF28003331AB /* simulator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E2273CD421D4EF28003331AB /* printer */ = {
+		E2273CD421D4EF28003331AB /* simulator */ = {
 			isa = PBXGroup;
 			children = (
 				E2273CD521D4EF28003331AB /* main.cpp */,
+				E29ABD612210B59D006BA49F /* test2.jpg */,
 			);
-			path = printer;
+			path = simulator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E2273CD121D4EF28003331AB /* printer */ = {
+		E2273CD121D4EF28003331AB /* simulator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E2273CD921D4EF28003331AB /* Build configuration list for PBXNativeTarget "printer" */;
+			buildConfigurationList = E2273CD921D4EF28003331AB /* Build configuration list for PBXNativeTarget "simulator" */;
 			buildPhases = (
 				E2273CCE21D4EF28003331AB /* Sources */,
 				E2273CCF21D4EF28003331AB /* Frameworks */,
@@ -77,9 +81,9 @@
 			);
 			dependencies = (
 			);
-			name = printer;
+			name = simulator;
 			productName = printer;
-			productReference = E2273CD221D4EF28003331AB /* printer */;
+			productReference = E2273CD221D4EF28003331AB /* simulator */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -97,7 +101,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E2273CCD21D4EF28003331AB /* Build configuration list for PBXProject "printer" */;
+			buildConfigurationList = E2273CCD21D4EF28003331AB /* Build configuration list for PBXProject "simulator" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -109,7 +113,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E2273CD121D4EF28003331AB /* printer */,
+				E2273CD121D4EF28003331AB /* simulator */,
 			);
 		};
 /* End PBXProject section */
@@ -298,7 +302,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E2273CCD21D4EF28003331AB /* Build configuration list for PBXProject "printer" */ = {
+		E2273CCD21D4EF28003331AB /* Build configuration list for PBXProject "simulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2273CD721D4EF28003331AB /* Debug */,
@@ -307,7 +311,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E2273CD921D4EF28003331AB /* Build configuration list for PBXNativeTarget "printer" */ = {
+		E2273CD921D4EF28003331AB /* Build configuration list for PBXNativeTarget "simulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2273CDA21D4EF28003331AB /* Debug */,

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:printer.xcodeproj">
+      location = "self:/Users/Pol/Desktop/printer/simulator.xcodeproj">
    </FileRef>
 </Workspace>
