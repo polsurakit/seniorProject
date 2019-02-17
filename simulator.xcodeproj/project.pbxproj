@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E2273CD621D4EF28003331AB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2273CD521D4EF28003331AB /* main.cpp */; };
+		E2A9C2FC221A0A65003CCEE9 /* myCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2A9C2FA221A0A65003CCEE9 /* myCamera.cpp */; };
+		E2A9C2FF221A0A84003CCEE9 /* myPrinter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2A9C2FD221A0A84003CCEE9 /* myPrinter.cpp */; };
+		E2A9C302221A0C36003CCEE9 /* myRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2A9C300221A0C36003CCEE9 /* myRandom.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,8 +28,13 @@
 /* Begin PBXFileReference section */
 		E2273CD221D4EF28003331AB /* simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = simulator; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2273CD521D4EF28003331AB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		E29ABD602210B52A006BA49F /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
-		E29ABD612210B59D006BA49F /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpg; sourceTree = "<group>"; };
+		E2A9C2FA221A0A65003CCEE9 /* myCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = myCamera.cpp; sourceTree = "<group>"; };
+		E2A9C2FB221A0A65003CCEE9 /* myCamera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = myCamera.hpp; sourceTree = "<group>"; };
+		E2A9C2FD221A0A84003CCEE9 /* myPrinter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = myPrinter.cpp; sourceTree = "<group>"; };
+		E2A9C2FE221A0A84003CCEE9 /* myPrinter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = myPrinter.hpp; sourceTree = "<group>"; };
+		E2A9C300221A0C36003CCEE9 /* myRandom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = myRandom.cpp; sourceTree = "<group>"; };
+		E2A9C301221A0C36003CCEE9 /* myRandom.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = myRandom.hpp; sourceTree = "<group>"; };
+		E2A9C303221A0DA1003CCEE9 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +53,6 @@
 			children = (
 				E2273CD421D4EF28003331AB /* simulator */,
 				E2273CD321D4EF28003331AB /* Products */,
-				E29ABD602210B52A006BA49F /* test.jpg */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,8 +67,14 @@
 		E2273CD421D4EF28003331AB /* simulator */ = {
 			isa = PBXGroup;
 			children = (
+				E2A9C303221A0DA1003CCEE9 /* test.jpg */,
 				E2273CD521D4EF28003331AB /* main.cpp */,
-				E29ABD612210B59D006BA49F /* test2.jpg */,
+				E2A9C2FA221A0A65003CCEE9 /* myCamera.cpp */,
+				E2A9C2FB221A0A65003CCEE9 /* myCamera.hpp */,
+				E2A9C2FD221A0A84003CCEE9 /* myPrinter.cpp */,
+				E2A9C2FE221A0A84003CCEE9 /* myPrinter.hpp */,
+				E2A9C300221A0C36003CCEE9 /* myRandom.cpp */,
+				E2A9C301221A0C36003CCEE9 /* myRandom.hpp */,
 			);
 			path = simulator;
 			sourceTree = "<group>";
@@ -123,6 +136,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A9C302221A0C36003CCEE9 /* myRandom.cpp in Sources */,
+				E2A9C2FC221A0A65003CCEE9 /* myCamera.cpp in Sources */,
+				E2A9C2FF221A0A84003CCEE9 /* myPrinter.cpp in Sources */,
 				E2273CD621D4EF28003331AB /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

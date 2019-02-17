@@ -10,18 +10,11 @@
 using namespace cv;
 #include <iostream>
 using namespace std;
+#include "myCamera.hpp"
+#include "myPrinter.hpp"
+#include "myRandom.hpp"
 
-class myRandom{
-    cv::RNG rng;
-    public:
-    myRandom(){
-        cv::RNG rng(cv::getCPUTickCount());
-    }
 
-    double normal(double sigma){
-        return rng.gaussian(sigma);
-    }
-};
 
 struct color{
     int r,g,b;
@@ -37,78 +30,9 @@ Mat expectedImage;
 int TOPLEFTX = 100;
 int TOPLEFTY = 100;
 
-class myCamera{ // 0.1 mm. per pixel
-    //var get 30cm*30cm picture
 
-    //func
-    //constructor
-public:
-    myCamera() {};
-    int rowSize = 3000;
-    int colSize = 3000;
-    Mat getImage(double x, double y, double theta, Mat field){
-        Mat result(rowSize,colSize,CV_8UC3,Vec3b(0,0,0));
-        for(int i = -colSize/2 ; i < colSize/2 ; i++ ){
-            for(int j = -rowSize/2 ; j < rowSize/2 ; j++){
-                int posX = round(cos(theta)*(i+0.5) - sin(theta)*(j+0.5));
-                int posY = round(sin(theta)*(i+0.5) + cos(theta)*(j+0.5));
-                posX = posX + x;
-                posY = posY + y;
-                if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
-                    result.at<Vec3b>(j+1500,i+1500) = Vec3b(0,0,255);
-                }else{
-                    //cout << posY << " " << posX << endl;
-                    result.at<Vec3b>(j+rowSize/2,i+colSize/2) = field.at<Vec3b>(posY,posX);
-                }
-            }
-        }
-        return result;
-    }
-};
 
-class myPrinter{
-public:
-    
-    //var
-    myCamera camera;
-    double x;
-    double y;
-    double theta;
-    double cameraX; //camera position compare to center of printer position
-    double cameraY;
-    double cameraZ;
-    Mat cameraImage;
-    const double movePositionError = 5; //5 cm.
-    const double moveRotationError = 5; //5 degree
-    
-    //func
-    //constructor
-    myPrinter(double cameraX, double cameraY, double cameraZ) :
-    cameraX(cameraX), cameraY(cameraY), cameraZ(cameraZ) {
-        x = 5000;
-        y = 5000;
-        theta = 0;
-    };
-    
-    void move(double newX, double newY){
-        x = newX+randomGenerator.normal(movePositionError);
-        y = newY+randomGenerator.normal(movePositionError);
-        theta = randomGenerator.normal(moveRotationError)/180;
-        cout << "move to " << x << " " << y << " " << theta << endl;
-    }
-    
-    //xlocal, ylocal is compare to center of printer
-    void print(int xlocal, int ylocal, Scalar c, Mat field){
-        field.at<Scalar>(ylocal+y,xlocal+x) = c;
-    }
-    
-    void getCameraImage(){
-        cameraImage = camera.getImage(x+cameraX, y+cameraY, theta, field);
-    }
-    
-};
-
-myPrinter printer(0,0,0);
+myPrinter printer(0,0,0,field);
 
 
 
@@ -201,7 +125,7 @@ void showResult(){
 }
 
 void initialize(){
-    image = imread("test2.jpg");
+    image = imread("test.jpg");
     if(! image.data )                              // Check for invalid input
     {
         cout <<  "Could not open or find the image" << std::endl ;
