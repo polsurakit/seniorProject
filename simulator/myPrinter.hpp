@@ -10,10 +10,12 @@
 #define myPrinter_hpp
 
 #include <stdio.h>
+#include <vector>
 #include "opencv2/opencv.hpp"
 #include "myCamera.hpp"
 #include "myRandom.hpp"
 using namespace cv;
+using namespace std;
 
 class myPrinter{
 public:
@@ -28,10 +30,12 @@ public:
     double cameraZ;
     Mat cameraImage;
     Mat field;
-    const double movePositionError = 5; //5 cm.
-    const double moveRotationError = 5; //5 degree
+    const double movePositionError = 50; // *.1 mm.
+    const double moveRotationError = 5; // degree
     myRandom randomGenerator;
     
+    double readPositionError = 10; // *.1 mm.
+    double readRotationError = 5; //degree
     //func
     //constructor
     myPrinter(double cameraX, double cameraY, double cameraZ, Mat field) :
@@ -39,18 +43,31 @@ public:
         x = 5000;
         y = 5000;
         theta = 0;
-    };
+    }
+    
+    vector<double> getPosition(){
+        double retx = x+randomGenerator.normal(readPositionError);
+        double rety = y+randomGenerator.normal(readPositionError);
+        double rettheta = theta*180/M_PI+randomGenerator.normal(readRotationError);
+        vector<double> result;
+        result.push_back(retx);
+        result.push_back(rety);
+        result.push_back(rettheta);
+        return result;
+    }
     
     void move(double newX, double newY){
         x = newX+randomGenerator.normal(movePositionError);
         y = newY+randomGenerator.normal(movePositionError);
-        theta = randomGenerator.normal(moveRotationError)/180;
-        //cout << "move to " << x << " " << y << " " << theta << endl;
+        theta = randomGenerator.normal(moveRotationError)/180*M_PI;
     }
     
+    //add color to field
     //xlocal, ylocal is compare to center of printer
-    void print(int xlocal, int ylocal, Scalar c, Mat field){
-        field.at<Scalar>(ylocal+y,xlocal+x) = c;
+    void paint(int xlocal, int ylocal, Vec3b c, Mat field){
+        if(y+ylocal < 1000 || y+ylocal >= 14000) return;
+        if(x+xlocal < 1000 || x+xlocal >= 14000) return;
+        field.at<Vec3b>(ylocal+y,xlocal+x) = c;
     }
     
     void getCameraImage(){

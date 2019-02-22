@@ -14,13 +14,8 @@ using namespace std;
 #include "myPrinter.hpp"
 #include "myRandom.hpp"
 
-
-
-struct color{
-    int r,g,b;
-};
-
 //var
+string OUTPUT_NAME = "result.jpg";
 const int TARGET_H_SIZE = 10000; //0.1 millimeter / pixel
 const int TARGET_W_SIZE = 10000; //0.1 millimeter / pixel
 myRandom randomGenerator;
@@ -30,6 +25,7 @@ Mat image;
 Mat image2;
 Mat showedImage;
 Mat expectedImage;
+Mat expectedResult;
 int TOPLEFTX = 1000;
 int TOPLEFTY = 1000;
 const int smallWindowSize = 250;
@@ -51,46 +47,47 @@ void showResult(){
             window2.at<Vec3b>((printer.y+i)/bigRatio, (printer.x+j)/bigRatio) = Vec3b(255,0,255);
         }
     }
-    //plot line =
-	for(int i = -printer.camera.rowSize/2 ; i < printer.camera.rowSize/2 ; i++){
-       int j = -printer.camera.colSize/2;
-       int posX = round(cos(printer.theta)*(i+0.5) - sin(printer.theta)*(j+0.5));
-       int posY = round(sin(printer.theta)*(i+0.5) + cos(printer.theta)*(j+0.5));
-       posX = posX + printer.x;
-       posY = posY + printer.y;
-       if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
+    double theta = printer.theta;
+    //plot real line =
+  	for(int i = -printer.camera.rowSize/2 ; i < printer.camera.rowSize/2 ; i++){
+         int j = -printer.camera.colSize/2;
+         int posX = round(cos(theta)*(j) - sin(theta)*(i));
+         int posY = round(sin(theta)*(j) + cos(theta)*(i));
+         posX = posX + printer.x;
+         posY = -posY + printer.y;
+         if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
 
-       }else{
-           window2.at<Vec3b>(posY/bigRatio, posX/bigRatio) = Vec3b(0,0,255);
-       }
-       j = printer.camera.colSize/2-1;
-       posX = round(cos(printer.theta)*(i+0.5) - sin(printer.theta)*(j+0.5));
-       posY = round(sin(printer.theta)*(i+0.5) + cos(printer.theta)*(j+0.5));
-       posX = posX + printer.x;
-       posY = posY + printer.y;
-       if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
+         }else{
+             window2.at<Vec3b>(posY/bigRatio, posX/bigRatio) = Vec3b(0,0,255);
+         }
+         j = printer.camera.colSize/2-1;
+         posX = round(cos(theta)*(j) - sin(theta)*(i));
+         posY = round(sin(theta)*(j) + cos(theta)*(i));
+         posX = posX + printer.x;
+         posY = -posY + printer.y;
+         if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
 
-       }else{
-           window2.at<Vec3b>(posY/bigRatio, posX/bigRatio) = Vec3b(0,0,255);
-       }
-    }
-    //plot line ||
+         }else{
+             window2.at<Vec3b>(posY/bigRatio, posX/bigRatio) = Vec3b(0,0,255);
+         }
+      }
+    //plot real line ||
     for(int j = -printer.camera.colSize/2 ; j < printer.camera.colSize/2 ; j++){
        int i = -printer.camera.rowSize/2;
-       int posX = round(cos(printer.theta)*(i+0.5) - sin(printer.theta)*(j+0.5));
-       int posY = round(sin(printer.theta)*(i+0.5) + cos(printer.theta)*(j+0.5));
+       int posX = round(cos(theta)*(j) - sin(theta)*(i));
+       int posY = round(sin(theta)*(j) + cos(theta)*(i));
        posX = posX + printer.x;
-       posY = posY + printer.y;
+       posY = -posY + printer.y;
        if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
 
        }else{
            window2.at<Vec3b>(posY/bigRatio, posX/bigRatio) = Vec3b(0,0,255);
        }
        i = printer.camera.rowSize/2-1;
-       posX = round(cos(printer.theta)*(i+0.5) - sin(printer.theta)*(j+0.5));
-       posY = round(sin(printer.theta)*(i+0.5) + cos(printer.theta)*(j+0.5));
+       posX = round(cos(theta)*(j) - sin(theta)*(i));
+       posY = round(sin(theta)*(j) + cos(theta)*(i));
        posX = posX + printer.x;
-       posY = posY + printer.y;
+       posY = -posY + printer.y;
        if(posX < 0 || posY < 0 || posX >= field.cols || posY >= field.rows){
 
        }else{
@@ -112,8 +109,8 @@ void initialize(){
         cout <<  "Could not open or find the image" << std::endl ;
     }
     resize(image,showedImage,Size(smallWindowSize, smallWindowSize),0,0);
-    for(int i = TOPLEFTY ; i <= fieldSize-TOPLEFTY ; i++){
-        for(int j = TOPLEFTX ; j <= fieldSize-TOPLEFTX ; j++){
+    for(int i = TOPLEFTY ; i < fieldSize-TOPLEFTY ; i++){
+        for(int j = TOPLEFTX ; j < fieldSize-TOPLEFTX ; j++){
             field.at<Vec3b>(i,j) = Vec3b(255,255,255);
         }
     }
@@ -124,6 +121,7 @@ void initialize(){
         }
     }
     resize(field,expectedImage,Size(bigWindowSize,bigWindowSize),0,0);
+    field.copyTo(expectedResult);
     for(int i = TOPLEFTY+1 ; i <= TOPLEFTY+TARGET_H_SIZE ; i++){
         for(int j = TOPLEFTX+1 ; j <= TOPLEFTX+TARGET_W_SIZE ; j++){
             field.at<Vec3b>(i,j) = Vec3b(255,255,255);
@@ -133,6 +131,34 @@ void initialize(){
 
 void algorithm(){
     showResult();
+    for(int i = 2000 ; i <= 10000 ; i+=2000){
+        for(int j = 2000 ; j <= 10000; j+=2000){
+            
+            printer.move(i, j);
+            cout << "move to " << i << " " << j << endl;
+            
+            //get image and position
+            cout << "get data" << endl;
+            printer.getCameraImage();
+            vector<double> pos = printer.getPosition(); // x, y, theta
+            double theta = pos[2]/180*M_PI;
+            
+            showResult();
+            //paint
+            cout << "paint" << endl;
+            for(int ii = -1500; ii < 1500 ; ii++){
+                for(int jj = -1500; jj < 1500 ; jj++){
+                    int posX = round(cos(theta)*(ii) - sin(theta)*(jj));
+                    int posY = round(sin(theta)*(ii) + cos(theta)*(jj));
+                    printer.paint(posX,posY, expectedResult.at<Vec3b>((int)pos[1] + posY, (int)pos[0]+posX), field);
+                }
+            }
+            
+            //show result
+            showResult();
+            cout << "show result" << endl;
+        }
+    }
 }
 
 
@@ -142,5 +168,7 @@ int main(int argc, char** argv)
     initialize();
     printer.getCameraImage();
     algorithm();
+    imwrite(OUTPUT_NAME, field);
+    imwrite("ex_"+OUTPUT_NAME, expectedResult);
     return 0;
 }
