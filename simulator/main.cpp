@@ -15,7 +15,9 @@ using namespace std;
 #include "myRandom.hpp"
 
 //var
-string OUTPUT_NAME = "result.jpg";
+string INPUT_NAME = "test2.jpg";
+string OUTPUT_NAME = "resultLine05mm2degree.jpg";
+
 const int TARGET_H_SIZE = 10000; //0.1 millimeter / pixel
 const int TARGET_W_SIZE = 10000; //0.1 millimeter / pixel
 myRandom randomGenerator;
@@ -103,7 +105,7 @@ void showResult(){
 }
 
 void initialize(){
-    image = imread("test.jpg");
+    image = imread(INPUT_NAME);
     if(! image.data )                              // Check for invalid input
     {
         cout <<  "Could not open or find the image" << std::endl ;
@@ -131,8 +133,8 @@ void initialize(){
 
 void algorithm(){
     showResult();
-    for(int i = 2000 ; i <= 10000 ; i+=2000){
-        for(int j = 2000 ; j <= 10000; j+=2000){
+    for(int i = 2000 ; i <= 14000 ; i+=2000){
+        for(int j = 2000 ; j <= 14000; j+=2000){
             
             printer.move(i, j);
             cout << "move to " << i << " " << j << endl;
@@ -141,20 +143,23 @@ void algorithm(){
             cout << "get data" << endl;
             printer.getCameraImage();
             vector<double> pos = printer.getPosition(); // x, y, theta
-            double theta = pos[2]/180*M_PI;
+            double theta = pos[2];
             
+            //show result
             showResult();
+            
             //paint
             cout << "paint" << endl;
             for(int ii = -1500; ii < 1500 ; ii++){
                 for(int jj = -1500; jj < 1500 ; jj++){
-                    int posX = round(cos(theta)*(ii) - sin(theta)*(jj));
-                    int posY = round(sin(theta)*(ii) + cos(theta)*(jj));
-                    printer.paint(posX,posY, expectedResult.at<Vec3b>((int)pos[1] + posY, (int)pos[0]+posX), field);
+                    int posX = round(cos(theta)*(ii) + sin(theta)*(jj));
+                    int posY = round(-sin(theta)*(ii) + cos(theta)*(jj));
+                    printer.paint(ii,jj, expectedResult.at<Vec3b>((int)pos[1] + posY, (int)pos[0]+posX), field);
                 }
             }
             
             //show result
+            printer.getCameraImage();
             showResult();
             cout << "show result" << endl;
         }
