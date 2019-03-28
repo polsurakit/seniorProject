@@ -35,8 +35,8 @@ public:
     double moveRotationError = 5; // degree
     myRandom randomGenerator;
     
-    double readPositionError = 50; // *.1 mm.
-    double readRotationError = 0.1; //degree
+    double readPositionError = 20; // *.1 mm.
+    double readRotationError = 0.05; //degree
     //func
     //constructor
     myPrinter(double cameraX, double cameraY, double cameraZ, Mat field) :

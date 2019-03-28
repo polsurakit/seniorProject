@@ -18,7 +18,7 @@ using namespace std;
 
 //var
 string INPUT_NAME = "test.jpg";
-string OUTPUT_NAME = "algor5_new_2.jpg";
+string OUTPUT_NAME = "algor3_new.jpg";
 bool isBlur = false;
 
 const int TARGET_H_SIZE = 10000; //0.1 millimeter / pixel
@@ -191,8 +191,8 @@ void fillzone(){
     zone2.resize(fieldSize,vector<int>(fieldSize));
     for(int i = 1500 ; i < 14000 ; i+=2000){
         for(int j = 1500 ; j < 14000 ; j+=2000){
-            for(int k = -1300; k < 1300 ; k++){
-                for(int l = -1300 ; l < 1300 ; l++){
+            for(int k = -1500; k < 1500 ; k++){
+                for(int l = -1500 ; l < 1500 ; l++){
                     zone[i+k][j+l] += 1;
                     
                 }
@@ -452,13 +452,17 @@ void algorithm3(){
         double theta = pos[2];
         showResult();
         cout << "paint" << endl;
-        for(double ii = -1500; ii < 1500 ; ii+=1){
-            for(double jj = -1500; jj < 1500 ; jj+=1){
+        for(double ii = -2000; ii < 2000 ; ii+=1){
+            for(double jj = -2000; jj < 2000 ; jj+=1){
                 //theta = 0;
                 int posX = round(cos(theta)*(ii) + sin(theta)*(jj));
                 int posY = round(-sin(theta)*(ii) + cos(theta)*(jj));
                 if((int)pos[1] + posY < 0 || (int)pos[1] + posY >= fieldSize) continue;
                 if((int)pos[0] + posX < 0 || (int)pos[0] + posX >= fieldSize) continue;
+                int Y = (int)pos[1] + posY;
+                int X = (int)pos[0]+posX;
+                if(Y<j-1500 || Y >= j+1500) continue;
+                if(X<i-1500 || X >= i+1500) continue;
                 int z = zone[(int)pos[1] + posY][(int)pos[0]+posX];
 
                 if(z==0 || z==zone2[(int)pos[1] + posY][(int)pos[0]+posX]) continue;
@@ -708,7 +712,7 @@ int main(int argc, char** argv)
 //    return 0;
     initialize();
     printer.getCameraImage();
-    algorithm5();
+    algorithm3();
     imwrite(OUTPUT_NAME, field);
     //imwrite("ex_"+OUTPUT_NAME, expectedResult);
     return 0;
